@@ -5,8 +5,9 @@ import graphql from './assets/graphql.svg'
 import './App.css'
 import { gql, useQuery } from '@apollo/client'
 import { Persons } from './Persons'
+import { PersonForm } from './PersonForm'
 
-const ALL_PERSONS = gql`
+export const ALL_PERSONS = gql`
   query {
     allPersons {
       id
@@ -21,7 +22,7 @@ const ALL_PERSONS = gql`
 `
 
 function App() {
-  const {data, error, loading} = useQuery(ALL_PERSONS)
+  const {data, error, loading} = useQuery(ALL_PERSONS, {pollInterval: 2000})
 
   if (error) {
     return <span style='color: red'>Error: {error}</span>
@@ -47,6 +48,7 @@ function App() {
           <Persons persons={data?.allPersons} />
         </>
       )}
+      <PersonForm />
     </>
   )
 }
